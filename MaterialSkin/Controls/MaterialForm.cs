@@ -7,14 +7,14 @@ namespace MaterialSkin.Controls
     using System.Drawing.Text;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
 
-    #if NETFRAMEWORK
+#if NETFRAMEWORK
     using System.Runtime.Remoting.Channels;
-    #endif
+#endif
 
-    public class MaterialForm : Form, IMaterialControl
-    {
+    public class MaterialForm : Form, IMaterialControl {
         #region Public Properties
         [Browsable(false)]
         public int Depth { get; set; }
@@ -29,11 +29,9 @@ namespace MaterialSkin.Controls
         public bool Sizable { get; set; }
 
         [Category("Material Skin"), Browsable(true), DisplayName("Form Style"), DefaultValue(FormStyles.ActionBar_40)]
-        public FormStyles FormStyle
-        {
+        public FormStyles FormStyle {
             get => _formStyle;
-            set
-            {
+            set {
                 if (_formStyle == value) return;
 
                 _formStyle = value;
@@ -42,11 +40,9 @@ namespace MaterialSkin.Controls
         }
 
         [Category("Drawer")]
-        public bool DrawerShowIconsWhenHidden
-        {
+        public bool DrawerShowIconsWhenHidden {
             get => _drawerShowIconsWhenHidden;
-            set
-            {
+            set {
                 if (_drawerShowIconsWhenHidden == value) return;
 
                 _drawerShowIconsWhenHidden = value;
@@ -62,15 +58,13 @@ namespace MaterialSkin.Controls
         public int DrawerWidth { get; set; }
 
         [Category("Drawer")]
-        public bool DrawerAutoHide
-        {
+        public bool DrawerAutoHide {
             get => _drawerAutoHide;
             set => drawerControl.AutoHide = _drawerAutoHide = value;
         }
 
         [Category("Drawer")]
-        public bool DrawerAutoShow
-        {
+        public bool DrawerAutoShow {
             get => _drawerAutoShow;
             set => drawerControl.AutoShow = _drawerAutoShow = value;
         }
@@ -79,11 +73,9 @@ namespace MaterialSkin.Controls
         public int DrawerIndicatorWidth { get; set; }
 
         [Category("Drawer")]
-        public bool DrawerIsOpen
-        {
+        public bool DrawerIsOpen {
             get => _drawerIsOpen;
-            set
-            {
+            set {
                 if (_drawerIsOpen == value) return;
 
                 _drawerIsOpen = value;
@@ -96,11 +88,9 @@ namespace MaterialSkin.Controls
         }
 
         [Category("Drawer")]
-        public bool DrawerUseColors
-        {
+        public bool DrawerUseColors {
             get => _drawerUseColors;
-            set
-            {
+            set {
                 if (_drawerUseColors == value) return;
 
                 _drawerUseColors = value;
@@ -113,11 +103,9 @@ namespace MaterialSkin.Controls
         }
 
         [Category("Drawer")]
-        public bool DrawerHighlightWithAccent
-        {
+        public bool DrawerHighlightWithAccent {
             get => _drawerHighlightWithAccent;
-            set
-            {
+            set {
                 if (_drawerHighlightWithAccent == value) return;
 
                 _drawerHighlightWithAccent = value;
@@ -130,11 +118,9 @@ namespace MaterialSkin.Controls
         }
 
         [Category("Drawer")]
-        public bool DrawerBackgroundWithAccent
-        {
+        public bool DrawerBackgroundWithAccent {
             get => _backgroundWithAccent;
-            set
-            {
+            set {
                 if (_backgroundWithAccent == value) return;
 
                 _backgroundWithAccent = value;
@@ -149,28 +135,23 @@ namespace MaterialSkin.Controls
         [Category("Drawer")]
         public MaterialTabControl DrawerTabControl { get; set; }
 
-        public override string Text
-        {
+        public override string Text {
             get { return base.Text; }
             set { base.Text = value; Invalidate(); }
         }
 
-        public new FormWindowState WindowState
-        {
+        public new FormWindowState WindowState {
             get { return base.WindowState; }
             set { base.WindowState = value; }
         }
 
-        public new FormBorderStyle FormBorderStyle
-        {
+        public new FormBorderStyle FormBorderStyle {
             get { return base.FormBorderStyle; }
             set { base.FormBorderStyle = value; }
         }
 
-        public Rectangle UserArea
-        {
-            get
-            {
+        public Rectangle UserArea {
+            get {
                 return new Rectangle(ClientRectangle.X, ClientRectangle.Y + STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, ClientSize.Width, ClientSize.Height - (STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT));
             }
         }
@@ -180,8 +161,7 @@ namespace MaterialSkin.Controls
         /// <summary>
         /// Various options to control the top caption of a window
         /// </summary>
-        public enum FormStyles
-        {
+        public enum FormStyles {
             StatusAndActionBar_None,
             ActionBar_None,
             ActionBar_40,
@@ -193,8 +173,7 @@ namespace MaterialSkin.Controls
         /// <summary>
         /// Various directions the form can be resized in
         /// </summary>
-        private enum ResizeDirection
-        {
+        private enum ResizeDirection {
             BottomLeft,
             Left,
             Right,
@@ -209,8 +188,7 @@ namespace MaterialSkin.Controls
         /// <summary>
         /// The states a button can be in
         /// </summary>
-        private enum ButtonState
-        {
+        private enum ButtonState {
             XOver,
             MaxOver,
             MinOver,
@@ -226,8 +204,7 @@ namespace MaterialSkin.Controls
         /// Window Messages
         /// <see href="https://docs.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues"/>
         /// </summary>
-        private enum WM
-        {
+        private enum WM {
             /// <summary>
             /// WM_NCCALCSIZE
             /// </summary>
@@ -270,8 +247,7 @@ namespace MaterialSkin.Controls
         /// Hit Test Results
         /// <see href="https://docs.microsoft.com/en-us/windows/win32/inputdev/wm-nchittest"/>
         /// </summary>
-        private enum HT
-        {
+        private enum HT {
             /// <summary>
             /// HTNOWHERE - Nothing under cursor
             /// </summary>
@@ -318,8 +294,7 @@ namespace MaterialSkin.Controls
         /// Window Styles
         /// <see href="https://docs.microsoft.com/en-us/windows/win32/winmsg/window-styles"/>
         /// </summary>
-        private enum WS
-        {
+        private enum WS {
             /// <summary>
             /// WS_MINIMIZEBOX - Allow minimizing from taskbar
             /// </summary>
@@ -338,8 +313,7 @@ namespace MaterialSkin.Controls
         /// Track Popup Menu Flags
         /// <see href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-trackpopupmenu"/>
         /// </summary>
-        private enum TPM
-        {
+        private enum TPM {
             /// <summary>
             /// TPM_LEFTALIGN
             /// </summary>
@@ -377,11 +351,9 @@ namespace MaterialSkin.Controls
         private Rectangle _statusBarBounds => new Rectangle(ClientRectangle.X, ClientRectangle.Y, ClientSize.Width, STATUS_BAR_HEIGHT);
         private Rectangle _drawerIconRect;
 
-        private bool Maximized
-        {
+        private bool Maximized {
             get => WindowState == FormWindowState.Maximized;
-            set
-            {
+            set {
                 if (!MaximizeBox || !ControlBox) return;
 
                 if (value)
@@ -412,8 +384,7 @@ namespace MaterialSkin.Controls
         private int ACTION_BAR_HEIGHT = 40;
         #endregion
 
-        public MaterialForm()
-        {
+        public MaterialForm() {
             DrawerWidth = 200;
             DrawerIsOpen = false;
             DrawerShowIconsWhenHidden = false;
@@ -429,18 +400,16 @@ namespace MaterialSkin.Controls
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             FormStyle = FormStyles.ActionBar_40;
 
-            Padding = new Padding(PADDING_MINIMUM, STATUS_BAR_HEIGHT+ ACTION_BAR_HEIGHT, PADDING_MINIMUM, PADDING_MINIMUM);      //Keep space for resize by mouse
+            Padding = new Padding(PADDING_MINIMUM, STATUS_BAR_HEIGHT + ACTION_BAR_HEIGHT, PADDING_MINIMUM, PADDING_MINIMUM);      //Keep space for resize by mouse
 
-            _clickAnimManager = new AnimationManager()
-            {
+            _clickAnimManager = new AnimationManager() {
                 AnimationType = AnimationType.EaseOut,
                 Increment = 0.04
             };
             _clickAnimManager.OnAnimationProgress += sender => Invalidate();
 
             // Drawer
-            Shown += (sender, e) =>
-            {
+            Load += async (sender, e) => {
                 if (DesignMode || IsDisposed)
                     return;
                 AddDrawerOverlayForm();
@@ -448,160 +417,149 @@ namespace MaterialSkin.Controls
         }
 
         #region Private Methods
-        protected void AddDrawerOverlayForm()
-        {
+        protected void AddDrawerOverlayForm() {
             if (DrawerTabControl == null)
                 return;
 
-            // Form opacity fade animation;
-            _drawerShowHideAnimManager = new AnimationManager
-            {
-                AnimationType = AnimationType.EaseInOut,
-                Increment = 0.04
-            };
+            //await Task.Run(() => {
 
-            _drawerShowHideAnimManager.OnAnimationProgress += (sender) =>
-            {
-                drawerOverlay.Opacity = (float)(_drawerShowHideAnimManager.GetProgress() * 0.55f);
-            };
+                // Form opacity fade animation;
+                _drawerShowHideAnimManager = new AnimationManager {
+                    AnimationType = AnimationType.EaseInOut,
+                    Increment = 0.04
+                };
 
-            int H = ClientSize.Height - _statusBarBounds.Height - _actionBarBounds.Height;
-            int Y = PointToScreen(Point.Empty).Y + _statusBarBounds.Height + _actionBarBounds.Height;
+                _drawerShowHideAnimManager.OnAnimationProgress += (sender) => {
+                    drawerOverlay.Opacity = (float)(_drawerShowHideAnimManager.GetProgress() * 0.55f);
+                };
 
-            // Overlay Form definitions
-            drawerOverlay.BackColor = Color.Black;
-            drawerOverlay.Opacity = 0;
-            drawerOverlay.MinimizeBox = false;
-            drawerOverlay.MaximizeBox = false;
-            drawerOverlay.Text = "";
-            drawerOverlay.ShowIcon = false;
-            drawerOverlay.ControlBox = false;
-            drawerOverlay.FormBorderStyle = FormBorderStyle.None;
-            drawerOverlay.Visible = true;
-            drawerOverlay.Size = new Size(ClientSize.Width, H);
-            drawerOverlay.Location = new Point(PointToScreen(Point.Empty).X, Y);
-            drawerOverlay.ShowInTaskbar = false;
-            drawerOverlay.Owner = this;
-            drawerOverlay.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+                int H = ClientSize.Height - _statusBarBounds.Height - _actionBarBounds.Height;
+                int Y = PointToScreen(Point.Empty).Y + _statusBarBounds.Height + _actionBarBounds.Height;
 
-            // Drawer Form definitions
-            drawerForm.BackColor = Color.LimeGreen;
-            drawerForm.TransparencyKey = Color.LimeGreen;
-            drawerForm.MinimizeBox = false;
-            drawerForm.MaximizeBox = false;
-            drawerForm.Text = "";
-            drawerForm.ShowIcon = false;
-            drawerForm.ControlBox = false;
-            drawerForm.FormBorderStyle = FormBorderStyle.None;
-            drawerForm.Visible = true;
-            drawerForm.Size = new Size(DrawerWidth, H);
-            drawerForm.Location = new Point(PointToScreen(Point.Empty).X, Y);
-            drawerForm.ShowInTaskbar = false;
-            drawerForm.Owner = drawerOverlay;
-            drawerForm.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
-
-            // Add drawer to overlay form
-            drawerForm.Controls.Add(drawerControl);
-            drawerControl.Location = new Point(0, 0);
-            drawerControl.Size = new Size(DrawerWidth, H);
-            drawerControl.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom);
-            drawerControl.BaseTabControl = DrawerTabControl;
-            drawerControl.ShowIconsWhenHidden = true;
-
-            // Init Options
-            drawerControl.IsOpen = DrawerIsOpen;
-            drawerControl.ShowIconsWhenHidden = DrawerShowIconsWhenHidden;
-            drawerControl.AutoHide = DrawerAutoHide;
-            drawerControl.AutoShow = DrawerAutoShow;
-            drawerControl.IndicatorWidth = DrawerIndicatorWidth;
-            drawerControl.HighlightWithAccent = DrawerHighlightWithAccent;
-            drawerControl.BackgroundWithAccent = DrawerBackgroundWithAccent;
-
-            // Changing colors or theme
-            SkinManager.ThemeChanged += sender =>
-            {
-                drawerForm.Refresh();
-            };
-            SkinManager.ColorSchemeChanged += sender =>
-            {
-                drawerForm.Refresh();
-            };
-
-            // Visible, Resize and move events
-            VisibleChanged += (sender, e) =>
-            {
-                drawerForm.Visible = Visible;
-                drawerOverlay.Visible = Visible;
-            };
-
-            Resize += (sender, e) =>
-            {
-                H = ClientSize.Height - _statusBarBounds.Height - _actionBarBounds.Height;
-                drawerForm.Size = new Size(DrawerWidth, H);
+                // Overlay Form definitions
+                drawerOverlay.BackColor = Color.Black;
+                drawerOverlay.Opacity = 0;
+                drawerOverlay.MinimizeBox = false;
+                drawerOverlay.MaximizeBox = false;
+                drawerOverlay.Text = "";
+                drawerOverlay.ShowIcon = false;
+                drawerOverlay.ControlBox = false;
+                drawerOverlay.FormBorderStyle = FormBorderStyle.None;
+                drawerOverlay.Visible = true;
                 drawerOverlay.Size = new Size(ClientSize.Width, H);
-            };
+                drawerOverlay.Location = new Point(PointToScreen(Point.Empty).X, Y);
+                drawerOverlay.ShowInTaskbar = false;
+                drawerOverlay.Owner = this;
+                drawerOverlay.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
 
-            Move += (sender, e) =>
-            {
-                Point pos = new Point(PointToScreen(Point.Empty).X, PointToScreen(Point.Empty).Y + _statusBarBounds.Height + _actionBarBounds.Height);
-                drawerForm.Location = pos;
-                drawerOverlay.Location = pos;
-            };
+                // Drawer Form definitions
+                drawerForm.BackColor = Color.LimeGreen;
+                drawerForm.TransparencyKey = Color.LimeGreen;
+                drawerForm.MinimizeBox = false;
+                drawerForm.MaximizeBox = false;
+                drawerForm.Text = "";
+                drawerForm.ShowIcon = false;
+                drawerForm.ControlBox = false;
+                drawerForm.FormBorderStyle = FormBorderStyle.None;
+                drawerForm.Visible = true;
+                drawerForm.Size = new Size(DrawerWidth, H);
+                drawerForm.Location = new Point(PointToScreen(Point.Empty).X, Y);
+                drawerForm.ShowInTaskbar = false;
+                drawerForm.Owner = drawerOverlay;
+                drawerForm.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
 
-            // Close when click outside menu
-            drawerOverlay.Click += (sender, e) =>
-            {
-                drawerControl.Hide();
-            };
+                // Add drawer to overlay form
+                drawerForm.Controls.Add(drawerControl);
+                drawerControl.Location = new Point(0, 0);
+                drawerControl.Size = new Size(DrawerWidth, H);
+                drawerControl.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom);
+                drawerControl.BaseTabControl = DrawerTabControl;
+                drawerControl.ShowIconsWhenHidden = true;
 
-            //Resize form when mouse over drawer
-            drawerControl.MouseDown += (sender, e) =>
-            {
-                ResizeForm(_resizeDir);
-            };
+                // Init Options
+                drawerControl.IsOpen = DrawerIsOpen;
+                drawerControl.ShowIconsWhenHidden = DrawerShowIconsWhenHidden;
+                drawerControl.AutoHide = DrawerAutoHide;
+                drawerControl.AutoShow = DrawerAutoShow;
+                drawerControl.IndicatorWidth = DrawerIndicatorWidth;
+                drawerControl.HighlightWithAccent = DrawerHighlightWithAccent;
+                drawerControl.BackgroundWithAccent = DrawerBackgroundWithAccent;
 
-            // Animation and visibility
-            drawerControl.DrawerBeginOpen += (sender) =>
-            {
-                _drawerShowHideAnimManager.StartNewAnimation(AnimationDirection.In);
-            };
+                // Changing colors or theme
+                SkinManager.ThemeChanged += sender => {
+                    drawerForm.Refresh();
+                };
+                SkinManager.ColorSchemeChanged += sender => {
+                    drawerForm.Refresh();
+                };
 
-            drawerControl.DrawerBeginClose += (sender) =>
-            {
-                _drawerShowHideAnimManager.StartNewAnimation(AnimationDirection.Out);
-            };
-            drawerControl.CursorUpdate += (sender, drawerCursor) =>
-            {
-                if (Sizable && !Maximized)
-                {
-                    if (drawerCursor == Cursors.SizeNESW)
-                        _resizeDir = ResizeDirection.BottomLeft;
-                    else if (drawerCursor == Cursors.SizeWE)
-                        _resizeDir = ResizeDirection.Left;
-                    else if (drawerCursor == Cursors.SizeNS)
-                        _resizeDir = ResizeDirection.Bottom;
+                // Visible, Resize and move events
+                VisibleChanged += (sender, e) => {
+                    drawerForm.Visible = Visible;
+                    drawerOverlay.Visible = Visible;
+                };
+
+                Resize += (sender, e) => {
+                    H = ClientSize.Height - _statusBarBounds.Height - _actionBarBounds.Height;
+                    drawerForm.Size = new Size(DrawerWidth, H);
+                    drawerOverlay.Size = new Size(ClientSize.Width, H);
+                };
+
+                Move += (sender, e) => {
+                    Point pos = new Point(PointToScreen(Point.Empty).X, PointToScreen(Point.Empty).Y + _statusBarBounds.Height + _actionBarBounds.Height);
+                    drawerForm.Location = pos;
+                    drawerOverlay.Location = pos;
+                };
+
+                // Close when click outside menu
+                drawerOverlay.Click += (sender, e) => {
+                    drawerControl.Hide();
+                };
+
+                //Resize form when mouse over drawer
+                drawerControl.MouseDown += (sender, e) => {
+                    ResizeForm(_resizeDir);
+                };
+
+                // Animation and visibility
+                drawerControl.DrawerBeginOpen += (sender) => {
+                    _drawerShowHideAnimManager.StartNewAnimation(AnimationDirection.In);
+                };
+
+                drawerControl.DrawerBeginClose += (sender) => {
+                    _drawerShowHideAnimManager.StartNewAnimation(AnimationDirection.Out);
+                };
+                drawerControl.CursorUpdate += (sender, drawerCursor) => {
+                    if (Sizable && !Maximized) {
+                        if (drawerCursor == Cursors.SizeNESW)
+                            _resizeDir = ResizeDirection.BottomLeft;
+                        else if (drawerCursor == Cursors.SizeWE)
+                            _resizeDir = ResizeDirection.Left;
+                        else if (drawerCursor == Cursors.SizeNS)
+                            _resizeDir = ResizeDirection.Bottom;
+                        else
+                            _resizeDir = ResizeDirection.None;
+                    }
                     else
                         _resizeDir = ResizeDirection.None;
-                }
-                else
-                    _resizeDir = ResizeDirection.None;
-                Cursor = drawerCursor;
-            };
+                    Cursor = drawerCursor;
+                };
 
-            // Form Padding corrections
+                // Form Padding corrections
 
-            if (Padding.Top < (_statusBarBounds.Height + _actionBarBounds.Height))
-                Padding = new Padding(Padding.Left, (_statusBarBounds.Height + _actionBarBounds.Height), Padding.Right, Padding.Bottom);
+                if (Padding.Top < (_statusBarBounds.Height + _actionBarBounds.Height))
+                    Padding = new Padding(Padding.Left, (_statusBarBounds.Height + _actionBarBounds.Height), Padding.Right, Padding.Bottom);
 
-            originalPadding = Padding;
+                originalPadding = Padding;
 
-            drawerControl.DrawerShowIconsWhenHiddenChanged += FixFormPadding;
-            FixFormPadding(this);
+                drawerControl.DrawerShowIconsWhenHiddenChanged += FixFormPadding;
+                FixFormPadding(this);
 
-            // Fix Closing the Drawer or Overlay form with Alt+F4 not exiting the app
-            drawerOverlay.FormClosed += TerminateOnClose;
-            drawerForm.FormClosed += TerminateOnClose;
-            drawerForm.Attach(drawerControl);
+                // Fix Closing the Drawer or Overlay form with Alt+F4 not exiting the app
+                drawerOverlay.FormClosed += TerminateOnClose;
+                drawerForm.FormClosed += TerminateOnClose;
+                drawerForm.Attach(drawerControl);
+            //});
         }
 
         private void TerminateOnClose(object sender, FormClosedEventArgs e)

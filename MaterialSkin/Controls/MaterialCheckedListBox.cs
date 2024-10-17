@@ -75,9 +75,14 @@
 
             public new void Add(MaterialSkin.Controls.MaterialCheckbox value)
             {
+                //value.TabIndex = base.Count;
                 base.Add(value);
                 _parent.Controls.Add(value);
+                _parent.Controls.SetChildIndex(value, 0);
+
+                //System.Diagnostics.Debug.WriteLine($"TAB_BEFORE_DOCK: {value.TabIndex}");
                 value.Dock = DockStyle.Top;
+                //System.Diagnostics.Debug.WriteLine($"TAB_AFTER_DOCK: {value.TabIndex}");
             }
 
             public new void Remove(MaterialSkin.Controls.MaterialCheckbox value)

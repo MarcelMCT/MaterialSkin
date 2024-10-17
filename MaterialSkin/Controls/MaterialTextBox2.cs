@@ -338,6 +338,10 @@ namespace MaterialSkin.Controls
 
         public void Paste() { baseTextBox.Paste(); }
 
+        public void Select(int start, int length) {
+            baseTextBox.Select(start, length);
+        }
+
         #region "Events"
 
         [Category("Action")]

@@ -57,6 +57,9 @@ namespace MaterialSkinExample
 
         private void seedListView()
         {
+
+            materialListView1.SmallImageList = this.menuIconList;
+
             //Define
             var data = new[]
             {
@@ -70,7 +73,7 @@ namespace MaterialSkinExample
             //Add
             foreach (string[] version in data)
             {
-                var item = new ListViewItem(version);
+                var item = new ListViewItem(version,0);
                 materialListView1.Items.Add(item);
             }
         }
@@ -106,6 +109,19 @@ namespace MaterialSkinExample
                     break;
 
                 case 1:
+
+                    //Color.FromArgb(5, 41, 113)
+
+                    materialSkinManager.ColorScheme = new ColorScheme(
+                        System.Drawing.Color.FromArgb(10, 50, 140),
+                        System.Drawing.Color.FromArgb(5, 41, 113),
+                        System.Drawing.Color.FromArgb(20, 80, 160),
+                        
+                        System.Drawing.Color.Gold,
+                        TextShade.WHITE);
+                    break;
+
+
                     materialSkinManager.ColorScheme = new ColorScheme(
                         Primary.Green600,
                         Primary.Green700,
@@ -216,6 +232,7 @@ namespace MaterialSkinExample
                 materialTextBox21.Hint = "Hint text";
             else
                 materialTextBox21.Hint = "";
+
         }
 
         private void materialComboBox7_SelectionChangeCommitted(object sender, EventArgs e)
