@@ -13,7 +13,7 @@ namespace MaterialSkinExample
         public MainForm()
         {
             InitializeComponent();
-
+            LoadImages();
             // Initialize MaterialSkinManager
             materialSkinManager = MaterialSkinManager.Instance;
 
@@ -53,6 +53,30 @@ namespace MaterialSkinExample
 
             materialMaskedTextBox1.ValidatingType = typeof(System.Int16);
 
+        }
+
+        private void LoadImages() {
+            //this.menuIconList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("menuIconList.ImageStream")));
+            this.menuIconList.TransparentColor = System.Drawing.Color.Transparent;
+            this.menuIconList.Images.Add("round_assessment_white_24dp.png", Properties.Resources.round_assessment_white_24dp);
+            this.menuIconList.Images.Add("round_backup_white_24dp.png", Properties.Resources.round_backup_white_24dp);
+            this.menuIconList.Images.Add("round_bluetooth_white_24dp.png", Properties.Resources.round_bluetooth_white_24dp);
+            this.menuIconList.Images.Add("round_bookmark_white_24dp.png", Properties.Resources.round_bookmark_white_24dp);
+            this.menuIconList.Images.Add("round_build_white_24dp.png", Properties.Resources.round_build_white_24dp);
+            this.menuIconList.Images.Add("round_gps_fixed_white_24dp.png", Properties.Resources.round_gps_fixed_white_24dp);
+            this.menuIconList.Images.Add("round_http_white_24dp.png", Properties.Resources.round_http_white_24dp);
+            this.menuIconList.Images.Add("round_report_problem_white_24dp.png", Properties.Resources.round_report_problem_white_24dp);
+            this.menuIconList.Images.Add("round_swap_vert_white_24dp.png", Properties.Resources.round_swap_vert_white_24dp);
+            this.menuIconList.Images.Add("round_phone_black_24dp.png", Properties.Resources.round_phone_black_24dp);
+            this.menuIconList.Images.Add("round_push_pin_black_24dp.png", Properties.Resources.round_phone_black_24dp);
+            this.menuIconList.Images.Add("round_mail_outline_black_24dp.png", Properties.Resources.round_phone_black_24dp);
+            this.menuIconList.Images.Add("round_person_black_24dp.png", Properties.Resources.round_phone_black_24dp);
+            this.menuIconList.Images.Add("round_add_a_photo_black_24dp.png", Properties.Resources.round_phone_black_24dp);
+            this.menuIconList.Images.Add("round_alternate_email_black_24dp.png", Properties.Resources.round_phone_black_24dp);
+            this.menuIconList.Images.Add("round_cancel_black_24dp.png", Properties.Resources.round_phone_black_24dp);
+            this.menuIconList.Images.Add("round_error_black_24dp.png", Properties.Resources.round_phone_black_24dp);
+            this.menuIconList.Images.Add("round_event_black_24dp.png", Properties.Resources.round_phone_black_24dp);
+            this.materialTabControl1.ImageList = this.menuIconList;
         }
 
         private void seedListView()

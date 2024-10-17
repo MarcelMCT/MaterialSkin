@@ -409,7 +409,7 @@ namespace MaterialSkin.Controls
             _clickAnimManager.OnAnimationProgress += sender => Invalidate();
 
             // Drawer
-            Load += async (sender, e) => {
+            Load += (sender, e) => {
                 if (DesignMode || IsDisposed)
                     return;
                 AddDrawerOverlayForm();

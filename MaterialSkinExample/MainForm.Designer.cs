@@ -294,7 +294,7 @@ namespace MaterialSkinExample
             this.materialTabControl1.Controls.Add(this.tabPage12);
             this.materialTabControl1.Depth = 0;
             this.materialTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.materialTabControl1.ImageList = this.menuIconList;
+            //this.materialTabControl1.ImageList = this.menuIconList;
             this.materialTabControl1.Location = new System.Drawing.Point(3, 64);
             this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabControl1.Multiline = true;
@@ -3280,26 +3280,26 @@ namespace MaterialSkinExample
             // 
             // menuIconList
             // 
-            this.menuIconList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("menuIconList.ImageStream")));
-            this.menuIconList.TransparentColor = System.Drawing.Color.Transparent;
-            this.menuIconList.Images.SetKeyName(0, "round_assessment_white_24dp.png");
-            this.menuIconList.Images.SetKeyName(1, "round_backup_white_24dp.png");
-            this.menuIconList.Images.SetKeyName(2, "round_bluetooth_white_24dp.png");
-            this.menuIconList.Images.SetKeyName(3, "round_bookmark_white_24dp.png");
-            this.menuIconList.Images.SetKeyName(4, "round_build_white_24dp.png");
-            this.menuIconList.Images.SetKeyName(5, "round_gps_fixed_white_24dp.png");
-            this.menuIconList.Images.SetKeyName(6, "round_http_white_24dp.png");
-            this.menuIconList.Images.SetKeyName(7, "round_report_problem_white_24dp.png");
-            this.menuIconList.Images.SetKeyName(8, "round_swap_vert_white_24dp.png");
-            this.menuIconList.Images.SetKeyName(9, "round_phone_black_24dp.png");
-            this.menuIconList.Images.SetKeyName(10, "round_push_pin_black_24dp.png");
-            this.menuIconList.Images.SetKeyName(11, "round_mail_outline_black_24dp.png");
-            this.menuIconList.Images.SetKeyName(12, "round_person_black_24dp.png");
-            this.menuIconList.Images.SetKeyName(13, "round_add_a_photo_black_24dp.png");
-            this.menuIconList.Images.SetKeyName(14, "round_alternate_email_black_24dp.png");
-            this.menuIconList.Images.SetKeyName(15, "round_cancel_black_24dp.png");
-            this.menuIconList.Images.SetKeyName(16, "round_error_black_24dp.png");
-            this.menuIconList.Images.SetKeyName(17, "round_event_black_24dp.png");
+            //this.menuIconList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("menuIconList.ImageStream")));
+            //this.menuIconList.TransparentColor = System.Drawing.Color.Transparent;
+            //this.menuIconList.Images.SetKeyName(0, "round_assessment_white_24dp.png");
+            //this.menuIconList.Images.SetKeyName(1, "round_backup_white_24dp.png");
+            //this.menuIconList.Images.SetKeyName(2, "round_bluetooth_white_24dp.png");
+            //this.menuIconList.Images.SetKeyName(3, "round_bookmark_white_24dp.png");
+            //this.menuIconList.Images.SetKeyName(4, "round_build_white_24dp.png");
+            //this.menuIconList.Images.SetKeyName(5, "round_gps_fixed_white_24dp.png");
+            //this.menuIconList.Images.SetKeyName(6, "round_http_white_24dp.png");
+            //this.menuIconList.Images.SetKeyName(7, "round_report_problem_white_24dp.png");
+            //this.menuIconList.Images.SetKeyName(8, "round_swap_vert_white_24dp.png");
+            //this.menuIconList.Images.SetKeyName(9, "round_phone_black_24dp.png");
+            //this.menuIconList.Images.SetKeyName(10, "round_push_pin_black_24dp.png");
+            //this.menuIconList.Images.SetKeyName(11, "round_mail_outline_black_24dp.png");
+            //this.menuIconList.Images.SetKeyName(12, "round_person_black_24dp.png");
+            //this.menuIconList.Images.SetKeyName(13, "round_add_a_photo_black_24dp.png");
+            //this.menuIconList.Images.SetKeyName(14, "round_alternate_email_black_24dp.png");
+            //this.menuIconList.Images.SetKeyName(15, "round_cancel_black_24dp.png");
+            //this.menuIconList.Images.SetKeyName(16, "round_error_black_24dp.png");
+            //this.menuIconList.Images.SetKeyName(17, "round_event_black_24dp.png");
             // 
             // materialContextMenuStrip1
             // 
