@@ -300,7 +300,8 @@ namespace MaterialSkinExample
         private void materialTextBox21_LeadingIconClick(object sender, EventArgs e)
         {
             MaterialSnackBar SnackBarMessage = new MaterialSnackBar("Leading Icon Click");
-            SnackBarMessage.Show(this);
+                SnackBarMessage.Show(this);
+            
         }
 
         private void materialTextBox21_TrailingIconClick(object sender, EventArgs e)
