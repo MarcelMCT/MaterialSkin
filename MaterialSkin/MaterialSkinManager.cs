@@ -71,12 +71,30 @@
             logicalFonts.Add("Button", createLogicalFont("Roboto Medium", 14, NativeTextRenderer.logFontWeight.FW_MEDIUM));
             logicalFonts.Add("Caption", createLogicalFont("Roboto", 12, NativeTextRenderer.logFontWeight.FW_REGULAR));
             logicalFonts.Add("Overline", createLogicalFont("Roboto", 10, NativeTextRenderer.logFontWeight.FW_REGULAR));
+
+            logicalFonts.Add("Regular9", createLogicalFont("Roboto", 9, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("Regular11", createLogicalFont("Roboto", 11, NativeTextRenderer.logFontWeight.FW_REGULAR));
+            logicalFonts.Add("Regular13", createLogicalFont("Roboto", 13, NativeTextRenderer.logFontWeight.FW_REGULAR));
+
             // Logical fonts for textbox animation
             logicalFonts.Add("textBox16", createLogicalFont("Roboto", 16, NativeTextRenderer.logFontWeight.FW_REGULAR));
             logicalFonts.Add("textBox15", createLogicalFont("Roboto", 15, NativeTextRenderer.logFontWeight.FW_REGULAR));
             logicalFonts.Add("textBox14", createLogicalFont("Roboto", 14, NativeTextRenderer.logFontWeight.FW_REGULAR));
             logicalFonts.Add("textBox13", createLogicalFont("Roboto Medium", 13, NativeTextRenderer.logFontWeight.FW_MEDIUM));
             logicalFonts.Add("textBox12", createLogicalFont("Roboto Medium", 12, NativeTextRenderer.logFontWeight.FW_MEDIUM));
+
+            logicalFontBysize = new Dictionary<int, string>(7) {
+                {9, "Regular9"},
+                {10, "Overline"},
+                {11, "Regular11"},
+                {12, "Caption"},
+                {13, "Regular13"},
+                {14, "Body2"},
+                {15, "textBox15"},
+                {16, "Body1"},
+            };
+
+
         }
 
         // Destructor
@@ -340,6 +358,17 @@
             }
             return new Font(RobotoFontFamilies["Roboto"], 14f, FontStyle.Regular, GraphicsUnit.Pixel);
         }
+        /// <summary>
+        /// Roboto, Roboto_Light, Roboto_Medium
+        /// </summary>
+        /// <param name="fontsize"></param>
+        /// <param name="fontname"></param>
+        /// <param name="fontstyle"></param>
+        /// <returns></returns>
+        public Font getFontByParams(float fontsize, string fontname = "Roboto", FontStyle fontstyle =FontStyle.Regular) {
+            return new Font(RobotoFontFamilies[fontname], fontsize, fontstyle, GraphicsUnit.Pixel);
+        }
+
 
         /// <summary>
         /// Get the font by size - used for textbox label animation, try to not use this for anything else
@@ -353,6 +382,16 @@
         }
 
         /// <summary>
+        ///  max 16 min 9
+        /// </summary>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public IntPtr getLogFontRegularBySize(int size) {
+            return logicalFonts[logicalFontBysize[Math.Min(logicalFontBysize.Keys.Last(), Math.Max(logicalFontBysize.Keys.First(), size))]];
+        }
+
+
+        /// <summary>
         /// Gets a Material Skin Logical Roboto Font given a standard material font type
         /// </summary>
         /// <param name="type">material design font type</param>
@@ -363,6 +402,7 @@
         }
 
         // Font stuff
+        private Dictionary<int, string> logicalFontBysize;
         private Dictionary<string, IntPtr> logicalFonts;
 
         private Dictionary<string, FontFamily> RobotoFontFamilies;

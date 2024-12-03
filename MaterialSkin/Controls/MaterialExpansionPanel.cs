@@ -19,7 +19,7 @@ namespace MaterialSkin.Controls
         private MaterialButton _validationButton;
         private MaterialButton _cancelButton;
 
-        private const int _expansionPanelDefaultPadding = 16;
+        private const int _expansionPanelDefaultPadding = 8;
         private const int _leftrightPadding = 24;
         private const int _buttonPadding = 8;
         private const int _expandcollapsbuttonsize = 24;
@@ -226,7 +226,11 @@ namespace MaterialSkin.Controls
             ExpandHeight = 240;
             AutoScroll = false;
 
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.Selectable, true);
+            //this.TabStop = true;
+
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw , true);
+
             BackColor = SkinManager.BackgroundColor;
             ForeColor = SkinManager.TextHighEmphasisColor;
 
@@ -287,6 +291,7 @@ namespace MaterialSkin.Controls
 
         }
 
+        
 
         protected override void OnCreateControl()
         {
@@ -296,9 +301,28 @@ namespace MaterialSkin.Controls
 
         protected override void InitLayout()
         {
+
+            System.Diagnostics.Debug.WriteLine("InitLayout");
+
             LocationChanged += (sender, e) => { Parent?.Invalidate(); };
             ForeColor = SkinManager.TextHighEmphasisColor;
         }
+
+        //protected override void OnGotFocus(EventArgs e) {
+        //    base.OnGotFocus(e);
+        //    Refresh();
+        //}
+        //protected override void OnLostFocus(EventArgs e) {
+        //    base.OnLostFocus(e);
+        //    Refresh();
+        //}
+        //protected override void OnEnter(EventArgs e) {
+        //    base.OnEnter(e); Refresh();
+        //}
+        //protected override void OnLeave(EventArgs e) {
+        //    base.OnLeave(e); Refresh();
+        //}
+
 
         protected override void OnParentChanged(EventArgs e)
         {
@@ -362,6 +386,9 @@ namespace MaterialSkin.Controls
 
         protected override void OnResize(EventArgs e)
         {
+
+            System.Diagnostics.Debug.WriteLine("OnResize");
+
             if (!_collapse)
             {
                 if (DesignMode)
@@ -496,74 +523,110 @@ namespace MaterialSkin.Controls
                 }
             }
 
-            // Calc text Rect
-            Rectangle headerRect = new Rectangle(
-                _leftrightPadding,
-                (_headerHeight - _textHeaderHeight) / 2,
-                TextRenderer.MeasureText(_titleHeader, Font).Width + _expansionPanelDefaultPadding,
-                _textHeaderHeight);
+            //// Calc text Rect
+            //Rectangle headerRect = new Rectangle(
+            //    _leftrightPadding,
+            //    (_headerHeight - _textHeaderHeight) / 2,
+            //    TextRenderer.MeasureText(_titleHeader, Font).Width + _expansionPanelDefaultPadding,
+            //    _textHeaderHeight);
 
             //Draw  headers
             using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
             {
+
+                var logfont = SkinManager.getLogFontRegularBySize(Font.Height);
+
+                //_titleHeader = this.ContainsFocus ? "Focused" : "Not Focussed";
+                //_descriptionHeader = _cancelButton.Focused ? "true" : "false";
+
+                // Calc text Rect
+                Rectangle headerRect = new Rectangle(
+                    _leftrightPadding,
+                    (_headerHeight - _textHeaderHeight) / 2,
+                    NativeText.MeasureLogString(_titleHeader, logfont).Width + _expansionPanelDefaultPadding,
+                    _textHeaderHeight);
+
+
                 // Draw header text
                 NativeText.DrawTransparentText(
                     _titleHeader,
-                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
+                    logfont /*SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1)*/,
                     Enabled ? SkinManager.TextHighEmphasisColor : SkinManager.TextDisabledOrHintColor,
                     headerRect.Location,
                     headerRect.Size,
                     NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
-            }
 
-            if (!String.IsNullOrEmpty(_descriptionHeader))
-	    {
-                //Draw description header text 
+                if (!string.IsNullOrEmpty(_descriptionHeader)) {
+                    //Draw description header text 
 
-                Rectangle headerDescriptionRect = new Rectangle(
-                    headerRect.Right + _expansionPanelDefaultPadding,
-                    (_headerHeight - _textHeaderHeight) / 2,
-                    _expandcollapseBounds.Left - (headerRect.Right + _expansionPanelDefaultPadding ) - _expansionPanelDefaultPadding,
-                    _textHeaderHeight);
+                    Rectangle headerDescriptionRect = new Rectangle(
+                        headerRect.Right + _expansionPanelDefaultPadding,
+                        (_headerHeight - _textHeaderHeight) / 2,
+                        _expandcollapseBounds.Left - (headerRect.Right + _expansionPanelDefaultPadding) - _expansionPanelDefaultPadding,
+                        _textHeaderHeight);
 
-                using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
-                {
-                    // Draw description header text 
-                    NativeText.DrawTransparentText(
-                    _descriptionHeader,
-                    SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
-                     SkinManager.TextDisabledOrHintColor,
-                    headerDescriptionRect.Location,
-                    headerDescriptionRect.Size,
-                    NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+
+                    //using (NativeTextRenderer NativeText = new NativeTextRenderer(g)) {
+                        // Draw description header text 
+                        NativeText.DrawTransparentText(
+                        _descriptionHeader,
+                        logfont /*SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1)*/,
+                         SkinManager.TextDisabledOrHintColor,
+                        headerDescriptionRect.Location,
+                        headerDescriptionRect.Size,
+                        NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+                    //}
                 }
             }
+
+     //       if (!String.IsNullOrEmpty(_descriptionHeader))
+	    //{
+     //           //Draw description header text 
+
+     //           Rectangle headerDescriptionRect = new Rectangle(
+     //               headerRect.Right + _expansionPanelDefaultPadding,
+     //               (_headerHeight - _textHeaderHeight) / 2,
+     //               _expandcollapseBounds.Left - (headerRect.Right + _expansionPanelDefaultPadding ) - _expansionPanelDefaultPadding,
+     //               _textHeaderHeight);
+
+     //           using (NativeTextRenderer NativeText = new NativeTextRenderer(g))
+     //           {
+     //               // Draw description header text 
+     //               NativeText.DrawTransparentText(
+     //               _descriptionHeader,
+     //               SkinManager.getLogFontByType(MaterialSkinManager.fontType.Body1),
+     //                SkinManager.TextDisabledOrHintColor,
+     //               headerDescriptionRect.Location,
+     //               headerDescriptionRect.Size,
+     //               NativeTextRenderer.TextAlignFlags.Left | NativeTextRenderer.TextAlignFlags.Middle);
+     //           }
+     //       }
 
             if (_showCollapseExpand==true)
             {
                 using (var formButtonsPen = new Pen(_useAccentColor && Enabled ? SkinManager.ColorScheme.AccentColor : SkinManager.TextDisabledOrHintColor, 2))
                 {
-                    if (_collapse)
-                    {
+                    if (_collapse) {
                         //Draw Expand button
-                        System.Drawing.Drawing2D.GraphicsPath pth = new System.Drawing.Drawing2D.GraphicsPath();
-                        PointF TopLeft = new PointF(_expandcollapseBounds.X + 6, _expandcollapseBounds.Y + 9);
-                        PointF MidBottom = new PointF(_expandcollapseBounds.X + 12, _expandcollapseBounds.Y + 15);
-                        PointF TopRight = new PointF(_expandcollapseBounds.X + 18, _expandcollapseBounds.Y + 9);
-                        pth.AddLine(TopLeft, MidBottom);
-                        pth.AddLine(TopRight, MidBottom);
-                        g.DrawPath(formButtonsPen, pth);
+                        using (System.Drawing.Drawing2D.GraphicsPath pth = new System.Drawing.Drawing2D.GraphicsPath()) {
+                            PointF TopLeft = new PointF(_expandcollapseBounds.X + 6, _expandcollapseBounds.Y + 9);
+                            PointF MidBottom = new PointF(_expandcollapseBounds.X + 12, _expandcollapseBounds.Y + 15);
+                            PointF TopRight = new PointF(_expandcollapseBounds.X + 18, _expandcollapseBounds.Y + 9);
+                            pth.AddLine(TopLeft, MidBottom);
+                            pth.AddLine(TopRight, MidBottom);
+                            g.DrawPath(formButtonsPen, pth);
+                        }
                     }
-                    else
-                    {
+                    else {
                         // Draw Collapse button
-                        System.Drawing.Drawing2D.GraphicsPath pth = new System.Drawing.Drawing2D.GraphicsPath();
-                        PointF BottomLeft = new PointF(_expandcollapseBounds.X + 6, _expandcollapseBounds.Y + 15);
-                        PointF MidTop = new PointF(_expandcollapseBounds.X + 12, _expandcollapseBounds.Y + 9);
-                        PointF BottomRight = new PointF(_expandcollapseBounds.X + 18, _expandcollapseBounds.Y + 15);
-                        pth.AddLine(BottomLeft, MidTop);
-                        pth.AddLine(BottomRight, MidTop);
-                        g.DrawPath(formButtonsPen, pth);
+                        using (System.Drawing.Drawing2D.GraphicsPath pth = new System.Drawing.Drawing2D.GraphicsPath()) {
+                            PointF BottomLeft = new PointF(_expandcollapseBounds.X + 6, _expandcollapseBounds.Y + 15);
+                            PointF MidTop = new PointF(_expandcollapseBounds.X + 12, _expandcollapseBounds.Y + 9);
+                            PointF BottomRight = new PointF(_expandcollapseBounds.X + 18, _expandcollapseBounds.Y + 15);
+                            pth.AddLine(BottomLeft, MidTop);
+                            pth.AddLine(BottomRight, MidTop);
+                            g.DrawPath(formButtonsPen, pth);
+                        }
                     }
                 }
             }
@@ -583,7 +646,7 @@ namespace MaterialSkin.Controls
             {
                 _headerHeight = _headerHeightCollapse;
                 this.Height = _headerHeightCollapse;
-                Margin = new Padding(16, 1, 16, 0);
+                //Margin = new Padding(16, 5, 16, 0);
 
                 // Is the event registered?
                 if (PanelCollapse != null)
@@ -594,7 +657,7 @@ namespace MaterialSkin.Controls
             {
                 _headerHeight = _headerHeightExpand;
                 this.Height = _expandHeight;
-                Margin = new Padding(16, 16, 16, 16);
+                //Margin = new Padding(16, 5, 16, 0);
 
                 // Is the event registered?
                 if (PanelExpand != null)
