@@ -492,7 +492,7 @@ namespace MaterialSkin.Controls
 
             // button shadow (blend with form shadow)
             DrawHelper.DrawSquareShadow(g, ClientRectangle);
-
+            //System.Diagnostics.Debug.WriteLine($"{ClientRectangle} {Padding}");
             // Draw expansion panel
             // Disabled
             if (!Enabled)
