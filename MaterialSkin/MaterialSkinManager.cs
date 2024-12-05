@@ -453,6 +453,10 @@
             _formsToManage.Remove(materialForm);
         }
 
+        public void AddChildControlToManage(Control c) {
+            UpdateControlBackColor(EnforceBackcolorOnAllComponents, c, BackdropColor);
+        }
+
         private void UpdateBackgrounds()
         {
             var newBackColor = BackdropColor;
