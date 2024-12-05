@@ -425,6 +425,7 @@ namespace MaterialSkinExample
             materialListBoxFormStyle.SelectedItem = null;
             materialListBoxFormStyle.Size = new Size(262, 298);
             materialListBoxFormStyle.TabIndex = 38;
+            materialListBoxFormStyle.SelectedIndexChanged += materialListBoxFormStyle_SelectedIndexChanged;
             // 
             // MaterialButton3
             // 
