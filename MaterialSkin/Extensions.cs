@@ -49,6 +49,15 @@
             }
         }
 
+        public static (bool ignore, bool ignorechilds) IsMaterialIgnoredControl(this Object obj) {
+            if (obj is IMaterialIgnoreControl materialIgnoreControl) {
+                return (materialIgnoreControl.MaterialSkinManagerIgnoreMe, materialIgnoreControl.MaterialSkinManagerIgnoreAllChilds);
+            }
+            else {
+                return (false, false);
+            }
+        }
+
         /// <summary>
         /// Transforms every char on a string to this dot: ●
         /// </summary>

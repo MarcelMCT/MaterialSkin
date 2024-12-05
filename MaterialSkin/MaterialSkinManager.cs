@@ -444,7 +444,7 @@
             // Set background on newly added controls
             materialForm.ControlAdded += (sender, e) =>
             {
-                UpdateControlBackColor(e.Control, BackdropColor);
+                UpdateControlBackColor(EnforceBackcolorOnAllComponents, e.Control, BackdropColor);
             };
         }
 
@@ -459,14 +459,16 @@
             foreach (var materialForm in _formsToManage)
             {
                 materialForm.BackColor = newBackColor;
-                UpdateControlBackColor(materialForm, newBackColor);
+                UpdateControlBackColor(EnforceBackcolorOnAllComponents, materialForm, newBackColor);
             }
         }
 
-        private void UpdateControlBackColor(Control controlToUpdate, Color newBackColor)
+        private void UpdateControlBackColor(bool enforceBackcolorOnAllComponents, Control controlToUpdate, Color newBackColor)
         {
             // No control
             if (controlToUpdate == null) return;
+
+            // Ignored 
 
             // Control's Context menu
             if (controlToUpdate.ContextMenuStrip != null) UpdateToolStrip(controlToUpdate.ContextMenuStrip, newBackColor);
@@ -491,17 +493,24 @@
             }
 
             // Other Generic control not part of material skin
-            else if (EnforceBackcolorOnAllComponents && controlToUpdate.HasProperty("BackColor") && !controlToUpdate.IsMaterialControl() && controlToUpdate.Parent != null)
+            else if (enforceBackcolorOnAllComponents && controlToUpdate.HasProperty("BackColor") && !controlToUpdate.IsMaterialControl() && controlToUpdate.Parent != null)
             {
-                controlToUpdate.BackColor = controlToUpdate.Parent.BackColor;
-                controlToUpdate.ForeColor = TextHighEmphasisColor;
-                controlToUpdate.Font = getFontByType(MaterialSkinManager.fontType.Body1);
+                System.Diagnostics.Debug.WriteLine($"{controlToUpdate.Name} {controlToUpdate.GetType().Namespace}");
+                var ignoredvalue = controlToUpdate.IsMaterialIgnoredControl();
+                if (!ignoredvalue.ignore) {
+                    controlToUpdate.BackColor = controlToUpdate.Parent.BackColor;
+                    controlToUpdate.ForeColor = TextHighEmphasisColor;
+                    controlToUpdate.Font = getFontByType(MaterialSkinManager.fontType.Body1);
+                }
+                if (ignoredvalue.ignorechilds) {
+                    enforceBackcolorOnAllComponents = false;
+                }
             }
 
             // Recursive call to control's children
             foreach (Control control in controlToUpdate.Controls)
             {
-                UpdateControlBackColor(control, newBackColor);
+                UpdateControlBackColor(enforceBackcolorOnAllComponents, control, newBackColor);
             }
         }
 

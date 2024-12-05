@@ -1,10 +1,8 @@
-﻿namespace MaterialSkin
-{
+﻿namespace MaterialSkin {
     /// <summary>
     /// Defines the <see cref="IMaterialControl" />
     /// </summary>
-    public interface IMaterialControl
-    {
+    public interface IMaterialControl {
         /// <summary>
         /// Gets or sets the Depth
         /// </summary>
@@ -19,6 +17,11 @@
         /// Gets or sets the MouseState
         /// </summary>
         MouseState MouseState { get; set; }
+    }
+
+    public interface IMaterialIgnoreControl {
+        bool MaterialSkinManagerIgnoreMe { get; set; }
+        bool MaterialSkinManagerIgnoreAllChilds { get; set; }
     }
 
     /// <summary>
