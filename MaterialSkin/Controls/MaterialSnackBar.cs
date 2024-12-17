@@ -203,6 +203,12 @@
         {
         }
 
+        public void ResetDurartion(int newduration) {
+            _duration.Stop();
+            _duration.Interval = newduration;
+            _duration.Start();
+        }
+
         private void UpdateRects()
         {
             if (_showActionButton == true)
